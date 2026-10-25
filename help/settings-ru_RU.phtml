@@ -18,19 +18,34 @@
     <p>Форму настроек модуля можно вызвать из <a href="<?= $url('index', 'extension:rg.be.config.desk') ?>">Панели конфигурации</a> или из <a href="<?= $url('index', 'extension:rg.be.mp.mmanager') ?>">Менеджера модулей</a>.</p>
     <h2>Поля формы</h2>
     <ul class="g-help-list">
-        <li><b>E-mail получателя уведомлений.</b> Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua;</li>
-        <li><b>Задействовать капчу.</b> Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua;</li>
-        <li><b>Запись действий в журнал аудита.</b> Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</li>
+        <li><span class="g-help-fld g-help-fld_text"></span> <b>E-mail получателя уведомлений.</b> Адреса электронной почты для получения уведомлений об авторизации пользователей в Панели управления. Адреса указываются списком через разделитель "," (запятая). Допускается указание нескольких адресов; пробелы вокруг запятых игнорируются при обработке. Пустое значение означает отсутствие уведомлений;</li>
     </ul>
 
     <h3>Шаблон письма</h3>
+    <p>Название шаблона письма, используемого для формирования уведомлений. Применяется для двух категорий получателей: администратора (как получателя уведомлений) и пользователя (восстанавливающего доступ к аккаунту).<br>
+    Формат значения: путь к шаблону в виде <code>каталог/имя_файла</code> (например, <code>mails/recovery</code>, где mails — каталог шаблонов, а recovery — базовое имя файла без расширения, соответствующее recovery.phtml).<br>
+    Механизм поиска шаблона: если указанный шаблон отсутствует в каталоге текущей темы оформления, система автоматически использует шаблон из каталога текущего модуля. При отсутствии шаблона в обоих каталогах генерируется ошибка.<br>
+    Система поддерживает локализацию шаблонов писем: при формировании пути к файлу шаблона учитывается текущий язык интерфейса.<br>
+    Формат имени файла: к базовому имени добавляется суффикс вида <code>-{код_языка}</code> (например, для <code>mails/recovery</code> и языка ru_RU результирующий файл — <code>mails/recovery-ru_RU.phtml</code>).
+    Приоритет поиска:<br>
+    1. Сначала система ищет локализованный файл с суффиксом языка.<br>
+    2. Если файл не найден, используется шаблон по умолчанию без суффикса (например, mails/recovery.phtml).<br>
+    Отсутствие обоих файлов приводит к ошибке.</p>
     <ul class="g-help-list">
-        <li><b>Для получателей уведомлений.</b> Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua;</li>
-        <li><b>Для пользователей.</b> Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</li>
+        <li><span class="g-help-fld g-help-fld_text"></span> <b>Для получателей уведомлений.</b> Шаблон письма, используемый для рассылки уведомлений администратору. В шаблон автоматически подставляются данные о пользователе, инициировавшем восстановление доступа к аккаунту (например, логин, email, дата запроса).<br>
+        Формат значения: базовый путь к шаблону без расширения (например, <code>mails/recovery</code>).<br>
+        Если значение не указано — применяется шаблон по умолчанию <code>mails/recovery</code>.</li>
+        <li><span class="g-help-fld g-help-fld_text"></span> <b>Для пользователей.</b> Шаблон письма, используемый для рассылки пользователям востанавливающим свой аккаунт. В шаблон автоматически подставляются данные о пользователе, инициировавшем восстановление доступа к аккаунту (например, логин, email, дата запроса).<br>
+        Формат значения: базовый путь к шаблону без расширения (например, <code>mails/recovery-user</code>).<br>
+        Если значение не указано — применяется шаблон по умолчанию <code>mails/recovery-user</code>.</li>
     </ul>
 
     <h3>Отправить письмо на e-mail</h3>
     <ul class="g-help-list">
-        <li><b>Получателю уведомлений.</b> Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</li>
+        <li><span class="g-help-fld g-help-fld_checkbox"></span> <b>Получателю уведомлений.</b> Если установлен флаг, то письма о попытке восстановления доступа к аккаунту пользователем будет приходить на адреса электронной почты указанный в поле "E-mail получателя управления".</li>
+    </ul>
+    <ul class="g-help-list">
+        <li><span class="g-help-fld g-help-fld_checkbox"></span> <b>Задействовать капчу</b> Если флаг установлен, то на форме восстановления доступа обязательно отображается и проверяется капча: пользователь должен успешно пройти верификацию, прежде чем запрос на восстановление будет обработан системой;</li>
+        <li><span class="g-help-fld g-help-fld_checkbox"></span> <b>Запись действий в журнал аудита</b> Если флаг установлен, то каждое действие пользователя в рамках сценария восстановления доступа (запрос сброса пароля, ввод кода подтверждения, успешное/неуспешное завершение и т. п.) фиксируется в журнале аудита с обязательными атрибутами: идентификатор пользователя (или псевдоним при анонимности), IP-адрес, временная метка, тип события, результат операции и т.д.</li>
     </ul>
 </article>

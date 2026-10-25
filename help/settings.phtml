@@ -18,19 +18,34 @@
     <p>The module settings form can be called from <a href="<?= $url('index', 'extension:rg.be.config.desk') ?>">Configuration panel</a> or from <a href="<?= $url('index', 'extension:rg.be.mp.mmanager') ?>">Module manager</a>.</p>
     <h2>Form fields</h2>
     <ul class="g-help-list">
-        <li><b>Notification recipient's email.</b> Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua;</li>
-        <li><b>Use captcha.</b> Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua;</li>
-        <li><b>Recording activities in the audit log.</b> Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</li>
+        <li><span class="g-help-fld g-help-fld_text"></span> <b>Notification recipient email.</b> Email addresses for receiving notifications about user logins to the Control Panel. Addresses should be provided as a list separated by commas (","). Multiple addresses may be specified; any spaces around the commas are ignored during processing. Leaving this field empty means no notifications will be sent.</li>
     </ul>
 
-    <h3>Letter template</h3>
+    <h3>Email Template</h3>
+    <p>The name of the email template used to generate notifications. This applies to two categories of recipients: the administrator (as a recipient of notifications) and the user (who is recovering access to their account).<br>
+    Value format: the path to the template, specified as <code>directory/filename</code> (for example, <code>mails/recovery</code>, where <code>mails</code> is the template directory and <code>recovery</code> is the base filename without an extension, corresponding to <code>recovery.phtml</code>).<br>
+    Template lookup mechanism: if the specified template is not found in the current theme's directory, the system automatically attempts to locate it in the current module's directory. If the template is missing from both locations, an error is generated.<br>
+    The system supports email template localization: the current interface language is taken into account when determining the path to the template file.<br>
+    Filename format: a suffix in the form <code>-{language_code}</code> is appended to the base filename (for example, for <code>mails/recovery</code> with the language <code>ru_RU</code>, the resulting file is <code>mails/recovery-ru_RU.phtml</code>).
+    Search priority:<br>
+    1. First, the system looks for a localized file with a language suffix.<br>
+    2. If that file is not found, it uses the default template without a suffix (e.g., mails/recovery.phtml).<br>
+    If neither file is found, an error occurs.</p>
     <ul class="g-help-list">
-        <li><b>For notification recipients.</b> Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua;</li>
-        <li><b>For users.</b> Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</li>
+        <li><span class="g-help-fld g-help-fld_text"></span> <b>For notification recipients.</b> An email template used for sending notifications to the administrator. Data regarding the user who initiated the account recovery process (e.g., username, email, request date) is automatically inserted into the template.<br>
+        Value format: the base path to the template, excluding the file extension (e.g., <code>mails/recovery</code>).<br>
+        If no value is provided, the default template <code>mails/recovery</code> is used.</li>
+        <li><span class="g-help-fld g-help-fld_text"></span> <b>For users.</b> An email template used for messages sent to users who are recovering their accounts. Data regarding the user who initiated the account recovery process (e.g., username, email, request date) is automatically inserted into the template.<br>
+        Value format: the base path to the template, excluding the file extension (e.g., <code>mails/recovery-user</code>).<br>
+        If no value is provided, the default template <code>mails/recovery-user</code> is used.</li>
     </ul>
 
     <h3>Send an email</h3>
     <ul class="g-help-list">
-        <li><b>Notification recipient.</b> Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</li>
+        <li><span class="g-help-fld g-help-fld_checkbox"></span> <b>To the notification recipient.</b> If this box is checked, emails regarding a user's attempt to recover account access will be sent to the email address specified in the "Recipient's email for management" field.</li>
+    </ul>
+    <ul class="g-help-list">
+        <li><span class="g-help-fld g-help-fld_checkbox"></span> <b>Enable CAPTCHA</b> If this option is selected, a CAPTCHA will be displayed and verified on the access recovery form: the user must successfully complete the verification before the system processes the recovery request;</li>
+        <li><span class="g-help-fld g-help-fld_checkbox"></span> <b>Log actions to the audit trail</b> If this option is selected, every user action within the access recovery workflow (such as requesting a password reset, entering a verification code, or completing the process successfully or unsuccessfully) is recorded in the audit trail, including mandatory attributes: user identifier (or an alias, if anonymity is maintained), IP address, timestamp, event type, operation result, etc.</li>
     </ul>
 </article>
