@@ -148,9 +148,9 @@ class IndexController extends Controller
         // для восстановления
         $url = ['recovery/verify'];
 
-        /** @var $version \Ge\Version\AppVersion */
+        /** @var \Ge\Version\AppVersion $version */
         $version = $app->version;
-        /** @var $edition  \Ge\Version\Edition */
+        /** @var \Ge\Version\Edition $edition */
         $edition = $app->version->getEdition();
 
         return $this->render('/form', [
