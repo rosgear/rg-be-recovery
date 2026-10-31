@@ -12,8 +12,8 @@
 return [
     'name'        => 'Account recovery',
     'description' => 'Recovering access to Control Panel account',
-    'version'     => '1.0.1',
-    'versionDate' => '20-10-2026',
+    'version'     => '1.0.2',
+    'versionDate' => '30-10-2026',
     'author'      => 'RosGear',
     'authorUrl'   => 'https://rosgear.ru/',
     'email'       => 'info@rosgear.ru',
