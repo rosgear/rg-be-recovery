@@ -62,7 +62,7 @@ use Ge\Helper\Html;
             <fieldset>
                 <label class="g-label label_auto">
                     <div class="g-captcha">
-                        <img src="recovery/captcha" id="icaptcha" />
+                        <img src="<?= Url::toBackend('recovery/captcha') ?>" id="icaptcha" />
                         <?= Html::a('', null, [
                             'href' => '',
                             'class' => 'g-form__button button_refresh',
